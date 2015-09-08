@@ -1,0 +1,45 @@
+<p id="notice"><%= notice %></p>
+
+<h1><u>USERS:</u></h1>
+<% if @users.size > 0 %> 
+<table>
+  <thead>
+    <tr>
+	  <th>ID</th>
+      <th>Name</th>
+	  <th>Phones</th>
+	  <th>Note</th>
+      <th colspan="3"></th>
+	  <th></th>
+	  <th></th>
+	    
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @users.each do |user| %>
+      <tr>
+        <td><%= user.id %></td>
+		 <td><%= user.name %></td>
+		 <td><% user.contacts.each do|contact|%>
+		         <%=contact.number%><br/>
+				 <%end%></td>
+		<td><% if user.note%>
+		    <%= user.note.desc%><%else%>
+			Note not found <% end%>
+        <td><%= link_to 'Show', user %></td>
+        <td><%= link_to 'Edit', edit_user_path(user) %></td>
+        <td><%= link_to 'Destroy', user, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+		<td><%= link_to 'New Contact', new_contact_path(:user_id => user.id) %></td>
+		<td><%= link_to 'New Note', new_note_path(:user_id => user.id) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<% else %>
+<p> You don't have any users to display </p>
+<% end %> 
+
+<br>
+
+<%= link_to 'New User', new_user_path %>
